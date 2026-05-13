@@ -3,6 +3,7 @@
 ## Frontend EC2
 
 La instancia frontend esta en subred publica y expone solo HTTP.
+IP publica elastica configurada: `3.216.54.40`.
 
 ```bash
 mkdir -p ~/ep2
