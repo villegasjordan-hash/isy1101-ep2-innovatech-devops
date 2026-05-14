@@ -17,6 +17,7 @@ docker ps
 ## Backend EC2
 
 La instancia backend esta en subred privada. Ejecuta los dos microservicios Spring Boot y MySQL con volumen nombrado.
+MySQL se levanta con `mysql_native_password` para mantener compatibilidad con el conector JDBC usado por los backends.
 
 ```bash
 mkdir -p ~/ep2
@@ -28,7 +29,7 @@ docker ps
 docker volume ls
 ```
 
-Si MySQL rechaza la conexion de los backends con el mensaje `Public Key Retrieval is not allowed`, se puede ajustar el usuario de la aplicacion:
+El workflow tambien ejecuta un ajuste idempotente del usuario de aplicacion para evitar el error `Public Key Retrieval is not allowed` cuando existe un volumen MySQL previo:
 
 ```bash
 docker exec mysql-ep2 mysql -uroot -pRootPass12345 -e "ALTER USER 'appuser'@'%' IDENTIFIED WITH mysql_native_password BY 'AppPass12345'; FLUSH PRIVILEGES;"

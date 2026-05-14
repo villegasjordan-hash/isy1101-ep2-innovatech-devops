@@ -89,6 +89,9 @@ jobs:
           ENV
           docker compose --env-file .env -f docker-compose.backend.yml pull
           docker compose --env-file .env -f docker-compose.backend.yml up -d
+          docker exec mysql-ep2 mysql -uroot -p${{ secrets.MYSQL_ROOT_PASSWORD }} -e "ALTER USER '${{ secrets.MYSQL_USER }}'@'%' IDENTIFIED WITH mysql_native_password BY '${{ secrets.MYSQL_PASSWORD }}'; FLUSH PRIVILEGES;"
+          docker restart backend-ventas backend-despachos
+          sleep 25
           docker ps
           EOF
 
