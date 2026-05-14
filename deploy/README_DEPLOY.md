@@ -3,7 +3,7 @@
 ## Frontend EC2
 
 La instancia frontend esta en subred publica y expone solo HTTP.
-IP publica elastica configurada: `3.216.54.40`.
+IP publica elastica configurada: `98.91.157.229`.
 
 ```bash
 mkdir -p ~/ep2
@@ -28,12 +28,25 @@ docker ps
 docker volume ls
 ```
 
+Si MySQL rechaza la conexion de los backends con el mensaje `Public Key Retrieval is not allowed`, se puede ajustar el usuario de la aplicacion:
+
+```bash
+docker exec mysql-ep2 mysql -uroot -pRootPass12345 -e "ALTER USER 'appuser'@'%' IDENTIFIED WITH mysql_native_password BY 'AppPass12345'; FLUSH PRIVILEGES;"
+docker restart backend-ventas backend-despachos
+```
+
 ## Puertos
 
 - Frontend: `80`
 - Backend ventas: `8080`
 - Backend despachos: `8081`
 - MySQL: `3306`, solo interno al backend
+
+## Pruebas de integracion
+
+- Frontend: `http://98.91.157.229`
+- API ventas: `http://98.91.157.229/api/v1/ventas`
+- API despachos: `http://98.91.157.229/api/v1/despachos`
 
 ## Secrets requeridos en GitHub Actions
 
