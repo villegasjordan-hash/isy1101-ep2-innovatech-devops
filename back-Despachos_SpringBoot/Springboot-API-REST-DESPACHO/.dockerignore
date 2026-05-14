@@ -6,14 +6,12 @@
 
 # Ignora dependencias locales
 target/
-.mvn/
 .settings/
 
 # Ignora control de versiones y sistema de build
 .git/
 .gitignore
 docker-compose.override.yml
-Dockerfile*
 
 # Ignora archivos temporales
 *.swp
